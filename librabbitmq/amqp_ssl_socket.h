@@ -33,6 +33,13 @@
 
 AMQP_BEGIN_DECLS
 
+typedef enum {
+  AMQP_SSL_TLS_V10 = (1 << 0),
+  AMQP_SSL_TLS_V11 = (1 << 1),
+  AMQP_SSL_TLS_V12 = (1 << 2),
+  AMQP_SSL_TLS_ANY = 0
+} amqp_ssl_tls_version_t;
+
 /**
  * Create a new SSL/TLS socket object.
  *
@@ -58,6 +65,12 @@ AMQP_PUBLIC_FUNCTION
 amqp_socket_t *
 AMQP_CALL
 amqp_ssl_socket_new(amqp_connection_state_t state);
+
+AMQP_PUBLIC_FUNCTION
+amqp_socket_t *
+AMQP_CALL
+amqp_ssl_socket_new_opts(amqp_connection_state_t state,
+                         amqp_ssl_tls_version_t tls);
 
 /**
  * Set the CA certificate.

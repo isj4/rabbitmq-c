@@ -420,6 +420,13 @@ static const struct amqp_socket_class_t amqp_ssl_socket_class = {
 amqp_socket_t *
 amqp_ssl_socket_new(amqp_connection_state_t state)
 {
+  return amqp_ssl_socket_new_opts(state, AMQP_SSL_TLS_ANY);
+}
+
+amqp_socket_t *
+amqp_ssl_socket_new_opts(amqp_connection_state_t state,
+                         amqp_ssl_tls_version_t tls)
+{
   struct amqp_ssl_socket_t *self = calloc(1, sizeof(*self));
   int status;
   if (!self) {
@@ -436,9 +443,27 @@ amqp_ssl_socket_new(amqp_connection_state_t state)
     goto error;
   }
 
-  self->ctx = SSL_CTX_new(SSLv23_client_method());
-  if (!self->ctx) {
-    goto error;
+  {
+    const SSL_METHOD *method;
+    switch (tls) {
+      case AMQP_SSL_TLS_V10:
+        method = TLSv1_client_method();
+        break;
+      case AMQP_SSL_TLS_V11:
+        method = TLSv1_1_client_method();
+        break;
+      case AMQP_SSL_TLS_V12:
+        method = TLSv1_2_client_method();
+        break;
+      case AMQP_SSL_TLS_ANY:
+      default:
+        method = SSLv23_client_method();
+    }
+    self->ctx = SSL_CTX_new(TLSv1_2_client_method());
+    if (!self->ctx) {
+      goto error;
+    }
+    SSL_CTX_set_options(self->ctx, SSL_OP_NO_SSLv2 | SSL_OP_NO_SSLv3);
   }
 
   amqp_set_socket(state, (amqp_socket_t *)self);
