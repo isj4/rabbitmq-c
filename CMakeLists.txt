@@ -2,6 +2,10 @@
 cmake_minimum_required(VERSION 2.6)
 project(rabbitmq-c "C")
 
+if (POLICY CMP0042)
+  cmake_policy(SET CMP0042 NEW)
+endif()
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 # Follow all steps below in order to calculate new ABI version when updating the library
