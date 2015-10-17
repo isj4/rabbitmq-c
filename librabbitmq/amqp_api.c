@@ -162,7 +162,7 @@ void amqp_abort(const char *fmt, ...)
   va_start(ap, fmt);
   vfprintf(stderr, fmt, ap);
   va_end(ap);
-  fputc('\n', stderr);
+  (void)fputc('\n', stderr);
   abort();
 }
 
