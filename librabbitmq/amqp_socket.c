@@ -454,7 +454,7 @@ int amqp_open_socket_inner(char const *hostname,
 
   for (addr = address_list; addr; addr = addr->ai_next) {
     if (-1 != sockfd) {
-      amqp_os_socket_close(sockfd);
+      (void)amqp_os_socket_close(sockfd);
     }
 
     sockfd = amqp_os_socket_socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
@@ -533,7 +533,7 @@ int amqp_open_socket_inner(char const *hostname,
   freeaddrinfo(address_list);
   if (last_error != AMQP_STATUS_OK) {
     if (-1 != sockfd) {
-      amqp_os_socket_close(sockfd);
+      (void)amqp_os_socket_close(sockfd);
     }
 
     return last_error;

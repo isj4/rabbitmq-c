@@ -210,7 +210,7 @@ amqp_tcp_socket_delete(void *base)
   struct amqp_tcp_socket_t *self = (struct amqp_tcp_socket_t *)base;
 
   if (self) {
-    amqp_tcp_socket_close(self);
+    (void)amqp_tcp_socket_close(self);
     free(self);
   }
 }
