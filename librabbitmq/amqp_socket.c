@@ -300,7 +300,7 @@ start_poll:
         return AMQP_STATUS_SOCKET_ERROR;
     }
   }
-  return AMQP_STATUS_OK;
+  /*NOTREACHED*/
 #elif defined(HAVE_SELECT)
   fd_set fds;
   fd_set exceptfds;
@@ -351,7 +351,7 @@ start_select:
         return AMQP_STATUS_SOCKET_ERROR;
     }
   }
-  return AMQP_STATUS_OK;
+  /*NOTREACHED*/
 #else
 # error "poll() or select() is needed to compile rabbitmq-c"
 #endif
