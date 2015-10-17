@@ -32,7 +32,10 @@
 ./librabbitmq/amqp_socket.c
 ./librabbitmq/amqp_framing.c
 ./librabbitmq/amqp_connection.c
+-save
+-esym(578,time)                        //uses 'time' as a parameter many places, which shadows the symbol time()
 ./librabbitmq/amqp_time.c
+-restore
 ./librabbitmq/amqp_table.c
 ./librabbitmq/amqp_hostcheck.c
 ./librabbitmq/amqp_url.c
