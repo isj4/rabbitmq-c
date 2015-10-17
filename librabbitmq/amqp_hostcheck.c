@@ -182,8 +182,8 @@ amqp_hostmatch(const char *hostname, const char *pattern)
   if (hostname_label_end - hostname < pattern_label_end - pattern) {
     return 0;
   }
-  prefixlen = pattern_wildcard - pattern;
-  suffixlen = pattern_label_end - (pattern_wildcard + 1);
+  prefixlen = (size_t)(pattern_wildcard - pattern);
+  suffixlen = (size_t)(pattern_label_end - (pattern_wildcard + 1));
   return amqp_raw_nequal(pattern, hostname, prefixlen) &&
     amqp_raw_nequal(pattern_wildcard + 1, hostname_label_end - suffixlen,
                     suffixlen) ? 1 : 0;
