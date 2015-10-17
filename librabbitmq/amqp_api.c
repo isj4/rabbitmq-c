@@ -63,7 +63,7 @@ enum error_category_enum_ {
   EC_ssl = 2
 };
 
-static const char *base_error_strings[] = {
+static const char *const base_error_strings[] = {
   "operation completed successfully",   /* AMQP_STATUS_OK                       0x0 */
   "could not allocate memory",          /* AMQP_STATUS_NO_MEMORY                -0x0001 */
   "invalid AMQP data",                  /* AMQP_STATUS_BAD_AQMP_DATA            -0x0002 */
@@ -86,19 +86,19 @@ static const char *base_error_strings[] = {
   "unsupported sasl method requested"   /* AMQP_STATUS_BROKER_UNSUPPORTED_SASL_METHOD -0x0013 */
 };
 
-static const char *tcp_error_strings[] = {
+static const char * const tcp_error_strings[] = {
   "a socket error occurred",              /* AMQP_STATUS_TCP_ERROR                -0x0100 */
   "socket library initialization failed"  /* AMQP_STATUS_TCP_SOCKETLIB_INIT_ERROR -0x0101 */
 };
 
-static const char *ssl_error_strings[] = {
+static const char * const ssl_error_strings[] = {
   "a SSL error occurred",                 /* AMQP_STATUS_SSL_ERROR                -0x0200 */
   "SSL hostname verification failed",     /* AMQP_STATUS_SSL_HOSTNAME_VERIFY_FAILED -0x0201 */
   "SSL peer cert verification failed",    /* AMQP_STATUS_SSL_PEER_VERIFY_FAILED -0x0202 */
   "SSL handshake failed"                  /* AMQP_STATUS_SSL_CONNECTION_FAILED  -0x0203 */
 };
 
-static const char *unknown_error_string = "(unknown error)";
+static const char unknown_error_string[] = "(unknown error)";
 
 const char *amqp_error_string2(int code)
 {
