@@ -406,6 +406,7 @@ int amqp_handle_input(amqp_connection_state_t state,
 
   default:
     amqp_abort("Internal error: invalid amqp_connection_state_t->state %d", state->state);
+    /*NOTREACHED*/
     return (int)bytes_consumed;
   }
 }
