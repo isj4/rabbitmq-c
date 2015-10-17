@@ -377,7 +377,7 @@ static ssize_t do_poll(amqp_connection_state_t state, ssize_t res,
 ssize_t amqp_try_send(amqp_connection_state_t state, const void *buf,
                       size_t len, amqp_time_t deadline, int flags) {
   ssize_t res;
-  void* buf_left = (void*)buf;
+  const char* buf_left = (const char*)buf;
   size_t len_left = len;
 
 start_send:
@@ -385,7 +385,7 @@ start_send:
 
   if (res > 0) {
     len_left -= (size_t)res;
-    buf_left = (char*)buf_left + res;
+    buf_left += res;
     if (0 == len_left) {
       return (ssize_t)len;
     }
