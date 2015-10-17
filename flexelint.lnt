@@ -4,6 +4,15 @@
 -i./librabbitmq/unix
 -i./build/librabbitmq
 
+-elib(46)                               //non-standard types used in bitfield definition in system headers
+-e537                                   //repeated include files
+
+-estring(641,amqp_status_enum_) //Converting enum 'amqp_status_enum_' to 'int'
+-estring(641,amqp_socket_flag_enum) //Converting enum 'amqp_socket_flag_enum' to 'int'
+-estring(641,amqp_connection_state_enum_) //Converting enum 'amqp_connection_state_enum_' to 'int'
++sem(amqp_abort,r_no) //amqp_abort calls abort()
+-function(malloc,amqp_pool_alloc)
+
 ./librabbitmq/amqp_api.c
 ./librabbitmq/amqp_consumer.c
 ./librabbitmq/amqp_tcp_socket.c
