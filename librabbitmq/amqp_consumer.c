@@ -252,7 +252,7 @@ amqp_rpc_reply_t amqp_read_message(amqp_connection_state_t state,
   if (0 == frame.payload.properties.body_size) {
     message->body = amqp_empty_bytes;
   } else {
-    if (SIZE_MAX < frame.payload.properties.body_size) {
+    if (SIZE_MAX < frame.payload.properties.body_size) { /*lint !e685 always evaluates to false on 64-bit*/
       ret.reply_type = AMQP_RESPONSE_LIBRARY_EXCEPTION;
       ret.library_error = AMQP_STATUS_NO_MEMORY;
       goto error_out1;
