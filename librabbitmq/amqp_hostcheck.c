@@ -26,6 +26,7 @@
 #include "amqp_private.h"
 
 #include <string.h>
+#include <assert.h>
 
 /* Portable, consistent toupper (remember EBCDIC). Do not use toupper()
  * because its behavior is altered by the current locale.
@@ -167,11 +168,13 @@ amqp_hostmatch(const char *hostname, const char *pattern)
   if (!wildcard_enabled) {
     return amqp_raw_equal(pattern, hostname) ? 1 : 0;
   }
+  assert(pattern_label_end!=NULL);
   hostname_label_end = strchr(hostname, '.');
   if (hostname_label_end == NULL ||
       !amqp_raw_equal(pattern_label_end, hostname_label_end)) {
     return 0;
   }
+  assert(hostname_label_end!=NULL);
   /* The wildcard must match at least one character, so the left-most
    * label of the hostname is at least as large as the left-most label
    * of the pattern.
