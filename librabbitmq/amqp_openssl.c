@@ -46,7 +46,7 @@
 
 
 static int initialize_openssl(void);
-static int destroy_openssl(void);
+static void destroy_openssl(void);
 
 static int open_ssl_connections = 0;
 static amqp_boolean_t do_initialize_openssl = 1;
@@ -337,9 +337,12 @@ exit:
   return status;
 
 error_out3:
-  SSL_shutdown(self->ssl);
+  /* SSL_shutdown() can technically fail and require a double-call if a
+   * bidirectional shutdown is required. But we are in the error path and
+   * don't really care */
+  (void)SSL_shutdown(self->ssl);
 error_out2:
-  amqp_os_socket_close(self->sockfd);
+  (void)amqp_os_socket_close(self->sockfd); /*we have no error strategy if close()/closesocket() fails*/
   self->sockfd = -1;
 error_out1:
   SSL_free(self->ssl);
@@ -400,7 +403,7 @@ amqp_ssl_socket_delete(void *base)
   struct amqp_ssl_socket_t *self = (struct amqp_ssl_socket_t *)base;
 
   if (self) {
-    amqp_ssl_socket_close(self);
+    (void)amqp_ssl_socket_close(self);
 
     SSL_CTX_free(self->ctx);
     free(self);
@@ -667,7 +670,7 @@ initialize_openssl(void)
     if (!openssl_initialized) {
       OPENSSL_config(NULL);
 
-      SSL_library_init();
+      (void)SSL_library_init(); /*always returns 1 and is safe to discard*/
       SSL_load_error_strings();
 
       openssl_initialized = 1;
@@ -682,12 +685,12 @@ initialize_openssl(void)
   return 0;
 }
 
-static int
+static void
 destroy_openssl(void)
 {
 #ifdef ENABLE_THREAD_SAFETY
   if (pthread_mutex_lock(&openssl_init_mutex)) {
-    return -1;
+    return;
   }
 #endif /* ENABLE_THREAD_SAFETY */
 
@@ -707,5 +710,4 @@ destroy_openssl(void)
 
   pthread_mutex_unlock(&openssl_init_mutex);
 #endif /* ENABLE_THREAD_SAFETY */
-  return 0;
 }
