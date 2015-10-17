@@ -24,6 +24,7 @@
 -emacro(506,sk_GENERAL_NAME_num)        //constant value booleans inside openssl macro
 -emacro(506,sk_GENERAL_NAME_pop)        //constant value booleans inside openssl macro
 
+-e793                                   //ANSI/ISO limit of 31 'significant characters in an external identifier' exceeded
 
 ./librabbitmq/amqp_api.c
 ./librabbitmq/amqp_consumer.c
