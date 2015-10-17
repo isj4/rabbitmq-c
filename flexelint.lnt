@@ -14,8 +14,16 @@
 -estring(641,amqp_status_enum_) //Converting enum 'amqp_status_enum_' to 'int'
 -estring(641,amqp_socket_flag_enum) //Converting enum 'amqp_socket_flag_enum' to 'int'
 -estring(641,amqp_connection_state_enum_) //Converting enum 'amqp_connection_state_enum_' to 'int'
+-estring(641,amqp_status_private_enum_) //Converting enum 'amqp_status_private_enum_' to 'int'
+-estring(641,amqp_field_value_kind_t) //Converting enum 'amqp_field_value_kind_t' to 'int'
+-estring(578,index)                     //local symbol 'index' shadows system index() symbol
+
 +sem(amqp_abort,r_no) //amqp_abort calls abort()
--function(malloc,amqp_pool_alloc)
+-function(malloc(1),amqp_pool_alloc(2))
+
+-emacro(506,sk_GENERAL_NAME_num)        //constant value booleans inside openssl macro
+-emacro(506,sk_GENERAL_NAME_pop)        //constant value booleans inside openssl macro
+
 
 ./librabbitmq/amqp_api.c
 ./librabbitmq/amqp_consumer.c
@@ -28,4 +36,7 @@
 ./librabbitmq/amqp_hostcheck.c
 ./librabbitmq/amqp_url.c
 ./librabbitmq/amqp_mem.c
+-save
+-estring(438,status)                   //Unusual constructs involving goto confuses flexelint in amqp_openssl.c
 ./librabbitmq/amqp_openssl.c
+-restore
