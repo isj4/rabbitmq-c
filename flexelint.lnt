@@ -26,6 +26,9 @@
 
 -e793                                   //ANSI/ISO limit of 31 'significant characters in an external identifier' exceeded
 
+-emacro(835,AMQP_VERSION_CODE)          //zero in bit operations inside macro
+-emacro(845,AMQP_VERSION_CODE)          //zero in bit operations inside macro
+
 ./librabbitmq/amqp_api.c
 ./librabbitmq/amqp_consumer.c
 ./librabbitmq/amqp_tcp_socket.c
