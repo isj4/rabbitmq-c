@@ -35,7 +35,7 @@
 #include <string.h>
 
 static
-int amqp_basic_properties_clone(amqp_basic_properties_t *original,
+int amqp_basic_properties_clone(const amqp_basic_properties_t *original,
                                 amqp_basic_properties_t *clone,
                                 amqp_pool_t *pool)
 {

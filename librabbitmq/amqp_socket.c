@@ -80,7 +80,7 @@
 # include <unistd.h>
 #endif
 
-static int amqp_id_in_reply_list( amqp_method_number_t expected, amqp_method_number_t *list );
+static int amqp_id_in_reply_list( amqp_method_number_t expected, const amqp_method_number_t *list );
 
 static int
 amqp_os_socket_init(void)
@@ -868,7 +868,7 @@ beginrecv:
   }
 }
 
-static amqp_link_t * amqp_create_link_for_frame(amqp_connection_state_t state, amqp_frame_t *frame)
+static amqp_link_t * amqp_create_link_for_frame(amqp_connection_state_t state, const amqp_frame_t *frame)
 {
   amqp_link_t *link;
   amqp_frame_t *frame_copy;
@@ -996,7 +996,7 @@ int amqp_simple_wait_frame_noblock(amqp_connection_state_t state,
 
 static int amqp_simple_wait_method_list(amqp_connection_state_t state,
                                         amqp_channel_t expected_channel,
-                                        amqp_method_number_t *expected_methods,
+                                        const amqp_method_number_t *expected_methods,
                                         amqp_method_t *output) {
   amqp_frame_t frame;
   int res = amqp_simple_wait_frame(state, &frame);
@@ -1041,7 +1041,7 @@ int amqp_send_method_inner(amqp_connection_state_t state,
   return amqp_send_frame_inner(state, &frame, flags);
 }
 
-static int amqp_id_in_reply_list( amqp_method_number_t expected, amqp_method_number_t *list )
+static int amqp_id_in_reply_list( amqp_method_number_t expected, const amqp_method_number_t *list )
 {
   while ( *list != 0 ) {
     if ( *list == expected ) {
