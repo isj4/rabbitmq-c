@@ -310,7 +310,7 @@ int amqp_handle_input(amqp_connection_state_t state,
     state->target_size
       = amqp_d32(raw_frame, 3) + HEADER_SIZE + FOOTER_SIZE;
 
-    if ((size_t)state->frame_max < state->target_size) {
+    if ((size_t)(unsigned)state->frame_max < state->target_size) {
       return AMQP_STATUS_BAD_AMQP_DATA;
     }
 
