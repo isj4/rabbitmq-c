@@ -268,7 +268,7 @@ amqp_rpc_reply_t amqp_channel_close(amqp_connection_state_t state,
 
   req.reply_code = code;
   req.reply_text.bytes = codestr;
-  req.reply_text.len = sprintf(codestr, "%d", code);
+  req.reply_text.len = (size_t)(unsigned)sprintf(codestr, "%d", code);
   req.class_id = 0;
   req.method_id = 0;
 
@@ -285,7 +285,7 @@ amqp_rpc_reply_t amqp_connection_close(amqp_connection_state_t state,
 
   req.reply_code = code;
   req.reply_text.bytes = codestr;
-  req.reply_text.len = sprintf(codestr, "%d", code);
+  req.reply_text.len = (size_t)(unsigned)sprintf(codestr, "%d", code);
   req.class_id = 0;
   req.method_id = 0;
 

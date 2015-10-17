@@ -378,14 +378,13 @@ ssize_t amqp_try_send(amqp_connection_state_t state, const void *buf,
                       size_t len, amqp_time_t deadline, int flags) {
   ssize_t res;
   void* buf_left = (void*)buf;
-  /* Assume that len is not going to be larger than ssize_t can hold. */
-  ssize_t len_left = (size_t)len;
+  size_t len_left = len;
 
 start_send:
-  res = amqp_socket_send(state->socket, buf_left, len_left, flags);
+  res = amqp_socket_send(state->socket, buf_left, (size_t)len_left, flags);
 
   if (res > 0) {
-    len_left -= res;
+    len_left -= (size_t)res;
     buf_left = (char*)buf_left + res;
     if (0 == len_left) {
       return (ssize_t)len;
@@ -397,7 +396,7 @@ start_send:
     goto start_send;
   }
   if (AMQP_STATUS_TIMEOUT == res) {
-    return (ssize_t)len - len_left;
+    return (ssize_t)(len - len_left);
   }
   return res;
 }
