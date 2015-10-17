@@ -301,6 +301,7 @@ int amqp_handle_input(amqp_connection_state_t state,
     /* it's not a protocol header; fall through to process it as a
        regular frame header */
 
+    /*FALLTHROUGH*/
   case CONNECTION_STATE_HEADER: {
     amqp_channel_t channel;
     amqp_pool_t *channel_pool;
@@ -339,6 +340,7 @@ int amqp_handle_input(amqp_connection_state_t state,
   }
     /* fall through to process body */
 
+    /*FALLTHROUGH*/
   case CONNECTION_STATE_BODY: {
     amqp_bytes_t encoded;
     int res;
