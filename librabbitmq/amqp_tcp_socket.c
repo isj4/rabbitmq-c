@@ -46,7 +46,9 @@ struct amqp_tcp_socket_t {
   const struct amqp_socket_class_t *klass;
   int sockfd;
   int internal_error;
+#if !defined(MSG_MORE) && defined(TCP_NOPUSH)
   int state;
+#endif
 };
 
 
