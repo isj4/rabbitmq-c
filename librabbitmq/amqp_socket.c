@@ -564,11 +564,11 @@ static amqp_bytes_t sasl_method_name(amqp_sasl_method_enum method)
 
   switch (method) {
   case AMQP_SASL_METHOD_PLAIN:
-    res.bytes = "PLAIN";
+    res.bytes = (void*)"PLAIN";
     res.len = 5;
     break;
   case AMQP_SASL_METHOD_EXTERNAL:
-    res.bytes = "EXTERNAL";
+    res.bytes = (void*)"EXTERNAL";
     res.len = 8;
     break;
 
