@@ -76,7 +76,7 @@ static char find_delim(char **pp, int colon_and_at_sign_are_delims)
         break;
       }
 
-      /* fall through */
+      /*FALLTHROUGH*/
     case 0:
     case '/':
     case '?':
