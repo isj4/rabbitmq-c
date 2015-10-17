@@ -232,9 +232,9 @@ amqp_tcp_socket_new(amqp_connection_state_t state)
   self->klass = &amqp_tcp_socket_class;
   self->sockfd = -1;
 
-  amqp_set_socket(state, (amqp_socket_t *)self);
+  amqp_set_socket(state, (amqp_socket_t *)(void*)self);
 
-  return (amqp_socket_t *)self;
+  return (amqp_socket_t *)(void*)self;
 }
 
 void
@@ -244,6 +244,6 @@ amqp_tcp_socket_set_sockfd(amqp_socket_t *base, int sockfd)
   if (base->klass != &amqp_tcp_socket_class) {
     amqp_abort("<%p> is not of type amqp_tcp_socket_t", base);
   }
-  self = (struct amqp_tcp_socket_t *)base;
+  self = (struct amqp_tcp_socket_t *)(void*)base;
   self->sockfd = sockfd;
 }

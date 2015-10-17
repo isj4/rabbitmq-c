@@ -444,11 +444,11 @@ amqp_ssl_socket_new(amqp_connection_state_t state)
     goto error;
   }
 
-  amqp_set_socket(state, (amqp_socket_t *)self);
+  amqp_set_socket(state, (amqp_socket_t *)(void*)self);
 
-  return (amqp_socket_t *)self;
+  return (amqp_socket_t *)(void*)self;
 error:
-  amqp_ssl_socket_delete((amqp_socket_t *)self);
+  amqp_ssl_socket_delete((amqp_socket_t *)(void*)self);
   return NULL;
 }
 
@@ -461,7 +461,7 @@ amqp_ssl_socket_set_cacert(amqp_socket_t *base,
   if (base->klass != &amqp_ssl_socket_class) {
     amqp_abort("<%p> is not of type amqp_ssl_socket_t", base);
   }
-  self = (struct amqp_ssl_socket_t *)base;
+  self = (struct amqp_ssl_socket_t *)(void*)base;
   status = SSL_CTX_load_verify_locations(self->ctx, cacert, NULL);
   if (1 != status) {
     return AMQP_STATUS_SSL_ERROR;
@@ -479,7 +479,7 @@ amqp_ssl_socket_set_key(amqp_socket_t *base,
   if (base->klass != &amqp_ssl_socket_class) {
     amqp_abort("<%p> is not of type amqp_ssl_socket_t", base);
   }
-  self = (struct amqp_ssl_socket_t *)base;
+  self = (struct amqp_ssl_socket_t *)(void*)base;
   status = SSL_CTX_use_certificate_chain_file(self->ctx, cert);
   if (1 != status) {
     return AMQP_STATUS_SSL_ERROR;
@@ -516,7 +516,7 @@ amqp_ssl_socket_set_key_buffer(amqp_socket_t *base,
   if (base->klass != &amqp_ssl_socket_class) {
     amqp_abort("<%p> is not of type amqp_ssl_socket_t", base);
   }
-  self = (struct amqp_ssl_socket_t *)base;
+  self = (struct amqp_ssl_socket_t *)(void*)base;
   status = SSL_CTX_use_certificate_chain_file(self->ctx, cert);
   if (1 != status) {
     return AMQP_STATUS_SSL_ERROR;
@@ -551,7 +551,7 @@ amqp_ssl_socket_set_cert(amqp_socket_t *base,
   if (base->klass != &amqp_ssl_socket_class) {
     amqp_abort("<%p> is not of type amqp_ssl_socket_t", base);
   }
-  self = (struct amqp_ssl_socket_t *)base;
+  self = (struct amqp_ssl_socket_t *)(void*)base;
   status = SSL_CTX_use_certificate_chain_file(self->ctx, cert);
   if (1 != status) {
     return AMQP_STATUS_SSL_ERROR;
@@ -573,7 +573,7 @@ void amqp_ssl_socket_set_verify_peer(amqp_socket_t *base,
   if (base->klass != &amqp_ssl_socket_class) {
     amqp_abort("<%p> is not of type amqp_ssl_socket_t", base);
   }
-  self = (struct amqp_ssl_socket_t *)base;
+  self = (struct amqp_ssl_socket_t *)(void*)base;
   self->verify_peer = verify;
 }
 
@@ -583,7 +583,7 @@ void amqp_ssl_socket_set_verify_hostname(amqp_socket_t *base,
   if (base->klass != &amqp_ssl_socket_class) {
     amqp_abort("<%p> is not of type amqp_ssl_socket_t", base);
   }
-  self = (struct amqp_ssl_socket_t *)base;
+  self = (struct amqp_ssl_socket_t *)(void*)base;
   self->verify_hostname = verify;
 }
 
